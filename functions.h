@@ -8,4 +8,13 @@ int testeSupremo(int n)
     return 404;
 }
 
+int coprimos(int a, int b){
+    if(a%b == 0) return b;
+    int aux;
+    aux = a;
+    a = b; 
+    b = aux%a;
+    coprimos(a, b)
+}
+
  #endif
