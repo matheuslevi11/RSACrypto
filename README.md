@@ -10,7 +10,7 @@ You might need to install a few things in order to run the file:
 sudo apt-get install g++ m4 zlib1g-dev p7zip
 ```
 
-Compile the main.cpp file using g++
+Compile the index.cpp file using g++
 ```
 g++ main.cpp -lgmpxx -lgmp
 ```
