@@ -84,4 +84,71 @@ int coprimos(mpz_class a, mpz_class b)
     return coprimos(b, a%b);
 }
 
- #endif
+int mdc(mpz_class a, mpz_class b, vector<mpz_class> &quo)
+{
+    if (a == 0)
+    {
+        return -1; // (Não existe)
+    }
+    if (b == 0)
+    {
+        return mpz_to_int(a);
+    }
+    if (a % b != 0)
+    {
+        quo.push_back(a / b);
+    }
+
+    return mdc(b, a % b, quo);
+}
+
+void invert(vector<mpz_class> &quocientes)
+{
+    vector<mpz_class> vetorAux;
+    for (int i = quocientes.size() - 1; i >= 0; i--)
+    {
+        vetorAux.push_back(quocientes[i]);
+    }
+
+    for (int i = 0; i < vetorAux.size(); i++)
+    {
+        quocientes[i] = vetorAux[i];
+    }
+}
+
+pair<mpz_class, mpz_class> linearCombination(vector<mpz_class> quo)
+{
+    vector<mpz_class> resultados;
+    mpz_class s, t;
+    resultados.push_back(1);
+    resultados.push_back(quo[0]);
+    for (int i = 1; i < quo.size(); i++)
+    {
+        resultados.push_back(quo[i] * resultados[i] + resultados[i - 1]);
+    }
+
+    s = resultados[resultados.size() - 2];
+    t = resultados[resultados.size() - 1];
+
+    if (quo.size() % 2 == 0)
+        return make_pair(-s, t);
+    else
+        return make_pair(s, -t);
+}
+
+mpz_class getReverse(mpz_class a, mpz_class m)
+{
+    vector<mpz_class> quo;
+    mpz_class s, t;
+    if (mdc(a, m, quo) == 1 && m > 1)
+    {
+        invert(quo);
+        pair<mpz_class, mpz_class> linear = linearCombination(quo);
+        s = linear.first;
+        t = linear.second;
+        return s;
+    }
+    return -1;
+}
+
+#endif
