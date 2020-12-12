@@ -1,9 +1,13 @@
 #include <bits/stdc++.h>
+#include "functions.h"
 
 using namespace std;
 
-int coprimos(int e, int totiente){
-    return 0;
+void generatePublicKey(mpz_class e_mpz, mpz_class n_mpz){
+    string e = e_mpz.get_str();
+    string n = n_mpz.get_str();
+
+    write_file("giulinhaGata.txt", n, e);
 }
 
 int main(){
@@ -15,38 +19,53 @@ int main(){
     scanf("%d", &option);
 
     if(option == 1){
-        long long int totiente, e, p, q;
+        string e, p, q;
         printf("p e q: \n");
         cin >> p >> q;
 
         printf("valor e: \n");
         cin >> e;
 
-        totiente = (p - 1) * (q - 1);
-        while(coprimos(e, totiente) == 1 || e < 1 || e > totiente){
+        mpz_class totiente_mpz, p_mpz, q_mpz, e_mpz ;
+        p_mpz = p;
+        q_mpz = q;
+        e_mpz = e;
+
+        totiente_mpz = (p_mpz - 1) * (q_mpz - 1);
+        while(coprimos(e_mpz, totiente_mpz) != 1 || e_mpz < 1 || e_mpz > totiente_mpz){
             printf("Digite um valor e válido\n");
             cin >> e;
+            e_mpz = e;
         }
+
+        generatePublicKey(e_mpz, p_mpz * q_mpz);
+        
     }
-   /*else if(option == 2){
+   else if(option == 2){
         string msg, publicKey;
         printf("Mensagem: \n");
         cin >> msg;
         printf("Insira a chave pública: \n");
-        cin >> publicKey;
-    }*/
+        cin >> n >> e;
+    }
     else if( option == 3){
-        long long int totiente, e, p, q;
+        string e, p, q;
         printf("p e q: \n");
         cin >> p >> q;
 
         printf("valor e: \n");
         cin >> e;
 
-        totiente = (p - 1) * (q - 1);
-        while(coprimos(e, totiente) == 1 || e < 1 || e > totiente){
+        mpz_class totiente_mpz, p_mpz, q_mpz, e_mpz ;
+        p_mpz = p;
+        q_mpz = q;
+        e_mpz = e;
+
+        totiente_mpz = (p_mpz - 1) * (q_mpz - 1);
+        while(coprimos(e_mpz, totiente_mpz) != 1 || e_mpz < 1 || e_mpz > totiente_mpz){
             printf("Digite um valor e válido\n");
             cin >> e;
+            e_mpz = e;
         }
         printf("Desencriptografando mensagem...");
     }
