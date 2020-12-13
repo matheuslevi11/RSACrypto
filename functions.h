@@ -6,6 +6,22 @@
 
 using namespace std;
 
+void write_msg(string filename, vector <mpz_class> msg){
+    ofstream file;
+    file.open(filename);
+
+    if(!file.good())
+        return;
+    else
+        printf("Mensagem encriptada com sucesso.\n");
+
+    for(int i= 0; i < 27; i++){
+        string number = msg[i].get_str(); 
+        file << number;
+        file << ' ';
+        return;
+    }
+}
 void write_file(string filename, string n1, string n2)
 {
     ofstream file;
@@ -23,6 +39,14 @@ void write_file(string filename, string n1, string n2)
     return;
 }
 
+int find(char caractere, char msg[]){
+    for(int i = 0; i < 27; i++){
+        if(caractere == msg[i]){
+            return i + 2;
+        }
+    }
+    return -1;
+}
 pair<string, string> read_file(string filename)
 {
     ifstream file;
@@ -71,7 +95,7 @@ int mpz_to_int(mpz_class n)
     int result = 0;
     for (int i = 0; i < number.size(); i++)
     {
-        int base = number[i] - '0';
+        int base = number[i] - '0'; 
         result += base * pow(10, j);
         j--;
     }
