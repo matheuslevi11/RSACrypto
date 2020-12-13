@@ -7,16 +7,43 @@ void generatePublicKey(mpz_class e_mpz, mpz_class n_mpz){
     string e = e_mpz.get_str();
     string n = n_mpz.get_str();
 
-    write_file("giulinhaGata.txt", n, e);
+    write_file("publicKeys.txt", n, e);
 }
 
+void encrypt(string msg, string n_str, string e_str){
+   char alphabet[27] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 
+    'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 
+    'T', 'U', 'V', 'W', 'X', 'Y', 'Z', ' '};
+
+    transform(msg.begin(), msg.end(), msg.begin(), ::toupper);
+    int size = msg.size();
+    vector <mpz_class> encryptMsg; 
+    mpz_class e, n;
+
+    e = e_str;
+    n = n_str;
+
+    for(int i = 0; i < size; i++){
+        unsigned long int m = find(msg[i], alphabet);
+        if(m == -1) continue;
+        mpz_class c, base;
+        mpz_ui_pow_ui (base.get_mpz_t(), m, e.get_ui());
+        c = base % n; 
+        cout << m << ' '; 
+        encryptMsg.push_back(c);
+    }
+
+    write_msg("encryptedMsg.txt", encryptMsg);
+
+
+}
 int main(){
     int option, p, q, e;
     printf("O que vc quer fazer?\n");
     printf("Gerar chave pública [1]\n");
     printf("Encriptar [2]\n");
     printf("Desencriptar [3]\n");
-    scanf("%d", &option);
+    cin >> option;  
 
     if(option == 1){
         string e, p, q;
@@ -42,11 +69,12 @@ int main(){
         
     }
    else if(option == 2){
-        string msg, publicKey;
+        string msg, n, e;
         printf("Mensagem: \n");
-        cin >> msg;
+        cin >> msg; 
         printf("Insira a chave pública: \n");
         cin >> n >> e;
+        encrypt(msg, n, e);
     }
     else if( option == 3){
         string e, p, q;
@@ -67,7 +95,7 @@ int main(){
             cin >> e;
             e_mpz = e;
         }
-        printf("Desencriptografando mensagem...");
+
     }
     return 0;
 }
