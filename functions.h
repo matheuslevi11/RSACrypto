@@ -18,7 +18,7 @@ void write_msg(string filename, vector <mpz_class> msg){
     for(int i= 0; i < 27; i++){
         string number = msg[i].get_str(); 
         file << number;
-        file << ' ';
+        file << ',';
         return;
     }
 }
@@ -47,6 +47,7 @@ int find(char caractere, char msg[]){
     }
     return -1;
 }
+
 vector <mpz_class> read_file(string filename){
 
     ifstream file;
@@ -59,14 +60,21 @@ vector <mpz_class> read_file(string filename){
         printf("File not found.\n");
     }
     else{
-        char chh;
+        char ch;
 
         while (1){
             file >> ch;
-            if (file.eof())
+
+            if (file.eof()){
+                mpz_class c;
+                c = str;
+                numbers.push_back(c);
                 break;
-            if (ch == ' '){
-                numbers.push_back(str);
+            }
+            if (ch == ','){
+                mpz_class c;
+                c = str;
+                numbers.push_back(c);
                 str = "";
             }
             else{
