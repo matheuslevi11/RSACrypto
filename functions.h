@@ -15,11 +15,13 @@ void write_msg(string filename, vector <mpz_class> msg){
     else
         printf("Mensagem encriptada com sucesso.\n");
 
-    for(int i= 0; i < 27; i++){
+    for(int i= 0; i < msg.size(); i++){
         string number = msg[i].get_str(); 
         file << number;
+        if(i == msg.size() - 1){
+            return;
+        }
         file << ',';
-        return;
     }
 }
 void write_file(string filename, string n1, string n2)
@@ -31,6 +33,10 @@ void write_file(string filename, string n1, string n2)
         return;
     else
         printf("Arquivo criado com sucesso.\n");
+    if(n2 == ""){
+        file << n1;
+        return;
+    }
 
     file << n1;
     file << ',';
