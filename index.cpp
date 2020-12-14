@@ -7,7 +7,7 @@ void generatePublicKey(mpz_class e_mpz, mpz_class n_mpz){
     string e = e_mpz.get_str();
     string n = n_mpz.get_str();
 
-    write_file("publicKeys.txt", n, e);
+    write_file("publicKey.txt", n, e);
 }
 
 void encrypt(string msg, string n_str, string e_str){
@@ -24,11 +24,12 @@ void encrypt(string msg, string n_str, string e_str){
     n = n_str;
 
     for(int i = 0; i < size; i++){
-        unsigned long int m = find(msg[i], alphabet);
+        mpz_class m;
+        m = find(msg[i], alphabet);
         if(m == -1) continue;
         mpz_class c, base;
-        mpz_ui_pow_ui (base.get_mpz_t(), m, e.get_ui());
-        c = base % n; 
+
+        mpz_powm(c.get_mpz_t(), m.get_mpz_t(), e.get_mpz_t(), n.get_mpz_t());
         encryptMsg.push_back(c);
     }
 
@@ -54,9 +55,9 @@ void decrypt(string p_str, string q_str, string e_str){
     vector <mpz_class> m;
 
     for(int i = 0; i < numbers.size(); i++){
-        mpz_class ch, base;
-        mpz_ui_pow_ui (base.get_mpz_t(), numbers[i].get_ui(), d.get_ui());
-        ch = base % (p * q);
+        mpz_class ch, base, n;
+        n = p * q;
+        mpz_powm(ch.get_mpz_t(), numbers[i].get_mpz_t(), d.get_mpz_t(), n.get_mpz_t() );
         m.push_back(ch);
     } 
 
@@ -82,15 +83,33 @@ int main(){
 
     if(option == 1){
         string e, p, q;
-        printf("p e q: \n");
-        cin >> p >> q;
+
+        printf("p: \n");
+        cin >> p;
+        mpz_class p_mpz;
+        p_mpz = p;
+        while (!primo(p_mpz))
+        {
+            printf("Digite um valor válido\n");
+            cin >> p;
+            p_mpz = p;
+        }
+
+        printf("q: \n");
+        cin >> q;
+        mpz_class q_mpz;
+        q_mpz = q;
+        while (!primo(q_mpz))
+        {
+            printf("Digite um valor válido\n");
+            cin >> q;
+            q_mpz = q;
+        }
 
         printf("valor e: \n");
         cin >> e;
 
-        mpz_class totiente_mpz, p_mpz, q_mpz, e_mpz ;
-        p_mpz = p;
-        q_mpz = q;
+        mpz_class totiente_mpz, e_mpz ;
         e_mpz = e;
 
         totiente_mpz = (p_mpz - 1) * (q_mpz - 1);
@@ -115,15 +134,33 @@ int main(){
 
     else if( option == 3){
         string e, p, q;
-        printf("p e q: \n");
-        cin >> p >> q;
+
+        printf("p: \n");
+        cin >> p;
+        mpz_class p_mpz;
+        p_mpz = p;
+        while (!primo(p_mpz))
+        {
+            printf("Digite um valor válido\n");
+            cin >> p;
+            p_mpz = p;
+        }
+
+        printf("q: \n");
+        cin >> q;
+        mpz_class q_mpz;
+        q_mpz = q;
+        while (!primo(q_mpz))
+        {
+            printf("Digite um valor válido\n");
+            cin >> q;
+            q_mpz = q;
+        }
 
         printf("valor e: \n");
         cin >> e;
 
-        mpz_class totiente_mpz, p_mpz, q_mpz, e_mpz ;
-        p_mpz = p;
-        q_mpz = q;
+        mpz_class totiente_mpz, e_mpz ;
         e_mpz = e;
 
         totiente_mpz = (p_mpz - 1) * (q_mpz - 1);

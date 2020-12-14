@@ -6,6 +6,23 @@
 
 using namespace std;
 
+bool primo(mpz_class n)
+{
+    if (n < 2)
+    {
+        return false;
+    }
+
+    for (int i = 2; i * i <= n; i++)
+    {
+        if (n % i == 0)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 void write_msg(string filename, vector <mpz_class> msg){
     ofstream file;
     file.open(filename);
@@ -45,7 +62,7 @@ void write_file(string filename, string n1, string n2)
     return;
 }
 
-int find(char caractere, char msg[]){
+mpz_class find(char caractere, char msg[]){
     for(int i = 0; i < 27; i++){
         if(caractere == msg[i]){
             return i + 2;
