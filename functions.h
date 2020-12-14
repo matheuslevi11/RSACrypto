@@ -47,54 +47,42 @@ int find(char caractere, char msg[]){
     }
     return -1;
 }
-pair<string, string> read_file(string filename)
-{
-    ifstream file;
-    string n;
-    string e;
+vector <mpz_class> read_file(string filename){
 
+    ifstream file;
     file.open(filename);
 
-    if (!file)
-    {
-        printf("File not found!\n");
+    string str;
+    vector <mpz_class> numbers;
+
+    if(!file){
+        printf("File not found.\n");
     }
-    else
-    {
-        char ch;
+    else{
+        char chh;
 
-        int numberIndex = 0;
-
-        while (1)
-        {
+        while (1){
             file >> ch;
             if (file.eof())
                 break;
-            if (ch == ',')
-            {
-                numberIndex++;
+            if (ch == ' '){
+                numbers.push_back(str);
+                str = "";
             }
-            else if (!numberIndex)
-            {
-                n.push_back(ch);
-            }
-            else
-            {
-                e.push_back(ch);
+            else{
+                str.push_back(ch);
             }
         }
     }
-    return make_pair(n, e);
+    return numbers;
 }
 
-int mpz_to_int(mpz_class n)
-{
+int mpz_to_int(mpz_class n){
 
     string number = n.get_str();
     int j = number.size() - 1;
     int result = 0;
-    for (int i = 0; i < number.size(); i++)
-    {
+    for (int i = 0; i < number.size(); i++){
         int base = number[i] - '0'; 
         result += base * pow(10, j);
         j--;
@@ -102,8 +90,7 @@ int mpz_to_int(mpz_class n)
     return result;
 }
 
-int coprimos(mpz_class a, mpz_class b)
-{
+int coprimos(mpz_class a, mpz_class b){
     if(a%b == 0) return mpz_to_int(b);
     return coprimos(b, a%b);
 }
@@ -129,13 +116,11 @@ int mdc(mpz_class a, mpz_class b, vector<mpz_class> &quo)
 void invert(vector<mpz_class> &quocientes)
 {
     vector<mpz_class> vetorAux;
-    for (int i = quocientes.size() - 1; i >= 0; i--)
-    {
+    for (int i = quocientes.size() - 1; i >= 0; i--){
         vetorAux.push_back(quocientes[i]);
     }
 
-    for (int i = 0; i < vetorAux.size(); i++)
-    {
+    for (int i = 0; i < vetorAux.size(); i++){
         quocientes[i] = vetorAux[i];
     }
 }
