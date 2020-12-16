@@ -76,8 +76,11 @@ void decrypt(string p_str, string q_str, string e_str){
 }
 
 int main(){
+    printf("------------------------\n");
+    printf("-------ℝ𝕊𝔸 ℂℝ𝕐ℙ𝕋𝕆​​​​​-------\n");
+    printf("------------------------\n\n");
     int option, p, q, e;
-    printf("O que vc quer fazer?\n");
+    printf("Escolha uma das opções:\n\n");
     printf("Gerar chave pública [1]\n");
     printf("Encriptar [2]\n");
     printf("Desencriptar [3]\n");
@@ -86,29 +89,29 @@ int main(){
     if(option == 1){
         string e, p, q;
 
-        printf("p: \n");
+        printf("Digite um número primo p: \n");
         cin >> p;
         mpz_class p_mpz;
         p_mpz = p;
         while (!primo(p_mpz))
         {
-            printf("Digite um valor válido\n");
+            printf("Valor digitado é inválido! Digite um valor válido\n");
             cin >> p;
             p_mpz = p;
         }
 
-        printf("q: \n");
+        printf("Digite um número primo q:\n");
         cin >> q;
         mpz_class q_mpz;
         q_mpz = q;
         while (!primo(q_mpz))
         {
-            printf("Digite um valor válido\n");
+            printf("Valor digitado é inválido! Digite um valor válido\n");
             cin >> q;
             q_mpz = q;
         }
 
-        printf("valor e: \n");
+        printf("Digite o expoente e: \n");
         cin >> e;
 
         mpz_class totiente_mpz, e_mpz ;
@@ -116,7 +119,7 @@ int main(){
 
         totiente_mpz = (p_mpz - 1) * (q_mpz - 1);
         while(coprimos(e_mpz, totiente_mpz) != 1 || e_mpz < 1 || e_mpz > totiente_mpz){
-            printf("Digite um valor e válido\n");
+            printf("Valor digitado é inválido! Digite um valor válido\n");
             cin >> e;
             e_mpz = e;
         }
@@ -126,10 +129,10 @@ int main(){
     }
    else if(option == 2){
         string msg, n, e;
-        printf("Mensagem: \n");
+        printf("Digite a mensagem a ser criptografada:\n");
         scanf("\n");
         getline(cin, msg); 
-        printf("Insira a chave pública: \n");
+        printf("Insira a chave pública(n, e)\n");
         cin >> n >> e;
         encrypt(msg, n, e);
     }
@@ -137,29 +140,29 @@ int main(){
     else if( option == 3){
         string e, p, q;
 
-        printf("p: \n");
+        printf("Digite um número primo p:\n");
         cin >> p;
         mpz_class p_mpz;
         p_mpz = p;
         while (!primo(p_mpz))
         {
-            printf("Digite um valor válido\n");
+            printf("Valor digitado é inválido! Digite um valor válido\n");
             cin >> p;
             p_mpz = p;
         }
 
-        printf("q: \n");
+        printf("Digite um número primo q:\n");
         cin >> q;
         mpz_class q_mpz;
         q_mpz = q;
         while (!primo(q_mpz))
         {
-            printf("Digite um valor válido\n");
+            printf("Valor digitado é inválido! Digite um valor válido\n");
             cin >> q;
             q_mpz = q;
         }
 
-        printf("valor e: \n");
+        printf("Digite um expoente e:\n");
         cin >> e;
 
         mpz_class totiente_mpz, e_mpz ;
@@ -167,7 +170,7 @@ int main(){
 
         totiente_mpz = (p_mpz - 1) * (q_mpz - 1);
         while(coprimos(e_mpz, totiente_mpz) != 1 || e_mpz < 1 || e_mpz > totiente_mpz){
-            printf("Digite um valor e válido\n");
+            printf("Valor digitado é inválido! Digite um valor válido\n");
             cin >> e;
             e_mpz = e;
         }
@@ -176,3 +179,4 @@ int main(){
     }
     return 0;
 }
+
