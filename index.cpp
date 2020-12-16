@@ -11,11 +11,13 @@ void generatePublicKey(mpz_class e_mpz, mpz_class n_mpz){
 }
 
 void encrypt(string msg, string n_str, string e_str){
+   
    char alphabet[27] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 
     'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 
     'T', 'U', 'V', 'W', 'X', 'Y', 'Z', ' '};
 
     transform(msg.begin(), msg.end(), msg.begin(), ::toupper);
+
     int size = msg.size();
     vector <mpz_class> encryptMsg; 
     mpz_class e, n;
@@ -25,12 +27,13 @@ void encrypt(string msg, string n_str, string e_str){
 
     for(int i = 0; i < size; i++){
         mpz_class m;
-        m = find(msg[i], alphabet);
+        m = find(msg[i], alphabet); 
         if(m == -1) continue;
-        mpz_class c, base;
+        mpz_class c;
 
         mpz_powm(c.get_mpz_t(), m.get_mpz_t(), e.get_mpz_t(), n.get_mpz_t());
-        encryptMsg.push_back(c);
+
+        encryptMsg.push_back(c); 
     }
 
     write_msg("encryptedMsg.txt", encryptMsg);
@@ -66,7 +69,6 @@ void decrypt(string p_str, string q_str, string e_str){
     for(int i = 0; i < m.size(); i++){
         
         int index = mpz_to_int(m[i]);
-        //printf("%c", alphabet[index - 2]);
         message.push_back(alphabet[index - 2]);
     }
 
